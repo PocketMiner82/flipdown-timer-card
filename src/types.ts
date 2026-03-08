@@ -1,9 +1,9 @@
-import { LovelaceCard, LovelaceCardConfig, LovelaceCardEditor } from 'custom-card-helpers';
+import { LovelaceCard, LovelaceCardConfig, LovelaceCardEditor } from "custom-card-helpers";
 
 declare global {
   interface HTMLElementTagNameMap {
-    'flipdown-timer-card-editor': LovelaceCardEditor;
-    'hui-error-card': LovelaceCard;
+    "flipdown-timer-card-editor": LovelaceCardEditor;
+    "hui-error-card": LovelaceCard;
   }
 }
 
@@ -15,4 +15,5 @@ export interface FlipdownTimerCardConfig extends LovelaceCardConfig {
   show_error?: boolean;
   test_gui?: boolean;
   entity: string;
+  auto_start_timeout?: number;
 }

@@ -1,42 +1,30 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  LitElement,
-  html,
-  TemplateResult,
-  PropertyValues,
-  CSSResultGroup,
-  unsafeCSS,
-} from 'lit';
+import { LitElement, html, TemplateResult, PropertyValues, CSSResultGroup, unsafeCSS } from "lit";
 import { customElement, property, state } from "lit/decorators";
-import {
-  HomeAssistant,
-  hasConfigOrEntityChanged,
-  LovelaceCardEditor,
-  getLovelace
-} from 'custom-card-helpers'; // This is a community maintained npm module with common helper functions/types
+import { HomeAssistant, hasConfigOrEntityChanged, LovelaceCardEditor, getLovelace } from "custom-card-helpers"; // This is a community maintained npm module with common helper functions/types
 
-import './editor';
+import "./editor";
 
-import type { FlipdownTimerCardConfig } from './types';
-import { CARD_VERSION } from './const';
-import { localize } from './localize/localize';
-import { FlipDown } from './flipdown.js'
-import { styles } from './styles';
+import type { FlipdownTimerCardConfig } from "./types";
+import { CARD_VERSION, DEFAULT_AUTO_START_TIMEOUT } from "./const";
+import { localize } from "./localize/localize";
+import { FlipDown } from "./flipdown.js";
+import { styles } from "./styles";
 
 /* eslint no-console: 0 */
 console.info(
-  `%c  FLIPDOWN-TIMER-CARD \n%c  ${localize('common.version')} ${CARD_VERSION}    `,
-  'color: orange; font-weight: bold; background: black',
-  'color: white; font-weight: bold; background: dimgray',
+  `%c  FLIPDOWN-TIMER-CARD \n%c  ${localize("common.version")} ${CARD_VERSION}    `,
+  "color: orange; font-weight: bold; background: black",
+  "color: white; font-weight: bold; background: dimgray",
 );
 
 // This puts your card into the UI card picker dialog
 (window as any).customCards = (window as any).customCards || [];
 (window as any).customCards.push({
-  type: 'flipdown-timer-card',
-  name: 'Flipdown Timer Card',
-  description: 'A template custom card for you to create something awesome',
+  type: "flipdown-timer-card",
+  name: "Flipdown Timer Card",
+  description: "A template custom card for you to create something awesome",
 });
 
 export function durationToSeconds(duration: string): number {
@@ -47,8 +35,8 @@ export function durationToSeconds(duration: string): number {
 let fdComponent: any = [];
 
 function startInterval(): void {
-  fdComponent = fdComponent.filter(a => a.offsetParent != null);
-  fdComponent.forEach(element => {
+  fdComponent = fdComponent.filter((a) => a.offsetParent != null);
+  fdComponent.forEach((element) => {
     element.fd._startInterval();
   });
 }
@@ -278,7 +266,7 @@ export class FlipdownTimer extends LitElement {
         this._handleBtnClick(1);
       }
       this.autoStartTimer = null;
-    }, 10000);
+    }, this.config.auto_start_timeout ?? DEFAULT_AUTO_START_TIMEOUT);
   }
 
   protected _init(): void {
