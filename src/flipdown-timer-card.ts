@@ -43,7 +43,7 @@ function startInterval(): void {
 
 @customElement("flipdown-timer-card")
 export class FlipdownTimer extends LitElement {
-  private autoStartTimer: NodeJS.Timeout | null = null;
+  private autoStartTimer: ReturnType<typeof setTimeout> | null = null;
 
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
     return document.createElement("flipdown-timer-card-editor");
